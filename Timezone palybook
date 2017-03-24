@@ -1,0 +1,13 @@
+---
+- hosts: all
+
+  tasks:
+
+    - name: Set timezone
+      replace: dest=/etc/sysconfig/clock regexp='ZONE.*' replace='ZONE="America/New_York"' backup=yes
+
+    - name: RM default localtime
+      file: path=/etc/localtime state=absent
+
+    - name: Make link to localtime
+      file: src=/usr/share/zoneinfo/America/New_York dest=/etc/localtime owner=root group=root state=link
